@@ -27,6 +27,15 @@
                     </li>
                 </ul>
             </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <!-- new-category -->
             <div class="wg-box">
                 <form class="form-new-product form-style-1" action="{{ route('categories.store') }}" method="POST"
