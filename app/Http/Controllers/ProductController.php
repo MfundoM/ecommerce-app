@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\ProductService;
 
@@ -32,7 +34,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::orderBy('name')->get();
+        $brands = Brand::orderBy('name')->get();
+
+        return view('admin.products.create', compact('categories', 'brands'));
     }
 
     /**
@@ -40,7 +45,9 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        //
+        $this->productService->createProduct($request->validated());
+
+        return redirect()->route('products.index')->with('status', 'Product created successfully');
     }
 
     /**
@@ -48,7 +55,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $this->productService->showProduct($product);
+
+        return view('admin.products.show', compact('product'));
     }
 
     /**
@@ -56,7 +65,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::orderBy('name')->get();
+        $brands = Brand::orderBy('name')->get();
+
+        return view('admin.products.edit', compact('product', 'categories', 'brands'));
     }
 
     /**
@@ -64,7 +76,9 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        //
+        $this->productService->updateProduct($request->validated(), $product);
+
+        return redirect()->route('products.index')->with('status', 'Product updated successfully');
     }
 
     /**
@@ -72,6 +86,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $this->productService->deleteProduct($product);
+
+        return redirect()->route('products.index')->with('status', 'Product deleted successfully');
     }
 }
