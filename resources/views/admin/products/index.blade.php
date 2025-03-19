@@ -33,12 +33,12 @@
                         </div>
                     </form>
                 </div>
-                <a class="tf-button style-1 w208" href="add-product.html"><i
+                <a class="tf-button style-1 w208" href="{{ route('products.create') }}"><i
                         class="icon-plus"></i>Add new</a>
             </div>
             <div class="table-responsive">
                 @if (Session::has('status'))
-                    <p class="alert alert-success">{{ Session::get('statu') }}</p>
+                    <p class="alert alert-success">{{ Session::get('status') }}</p>
                 @endif
                 <table class="table table-striped table-bordered">
                     <thead>
@@ -62,7 +62,7 @@
                                 <td>{{ $product->id }}</td>
                                 <td class="pname">
                                     <div class="image">
-                                        <img src="{{ asset('uploads/products/' . $product->image) }}" alt="$product->image" class="image">
+                                        <img src="{{ asset('uploads/products/thumbnails/' . $product->image) }}" alt="$product->image" class="image">
                                     </div>
                                     <div class="name">
                                         <a href="#" class="body-title-2">{{ $product->name }}</a>
