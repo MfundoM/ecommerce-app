@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Category;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 class CategoryService
@@ -20,8 +21,8 @@ class CategoryService
         $category->name = $request['name'];
         $category->slug = Str::slug($request['slug']);
 
-        if (isset($request['image']) && is_uploaded_file($request['image'])) {
-            $category->image = handleImageUpload($request['image'], $this->imagePath, 124, 124);
+        if (isset($request['image']) && $request['image'] instanceof UploadedFile) {
+            $category->image = handleImageUpload($request['image'], $this->imagePath);
         }
 
         $category->save();
@@ -34,9 +35,9 @@ class CategoryService
         $category->name = $request['name'];
         $category->slug = Str::slug($request['slug']);
 
-        if (isset($request['image']) && is_uploaded_file($request['image'])) {
+        if (isset($request['image']) && $request['image'] instanceof UploadedFile) {
             deleteImage($this->imagePath, $category->image);
-            $category->image = handleImageUpload($request['image'], $this->imagePath, 124, 124);
+            $category->image = handleImageUpload($request['image'], $this->imagePath);
         }
 
         $category->save();
@@ -46,7 +47,7 @@ class CategoryService
 
     public function deleteCategory(Category $category)
     {
-        if ($category->image) {
+        if (!empty($category->image)) {
             deleteImage($this->imagePath, $category->image);
         }
 

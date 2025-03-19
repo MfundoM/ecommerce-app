@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Brand;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 class BrandService
@@ -20,8 +21,8 @@ class BrandService
         $brand->name = $request['name'];
         $brand->slug = Str::slug($request['slug']);
 
-        if (isset($request['image']) && is_uploaded_file($request['image'])) {
-            $brand->image = handleImageUpload($request['image'], $this->imagePath, 124, 124);
+        if (isset($request['image']) && $request['image'] instanceof UploadedFile) {
+            $brand->image = handleImageUpload($request['image'], $this->imagePath);
         }
 
         $brand->save();
@@ -34,9 +35,9 @@ class BrandService
         $brand->name = $request['name'];
         $brand->slug = Str::slug($request['slug']);
 
-        if (isset($request['image']) && is_uploaded_file($request['image'])) {
+        if (isset($request['image']) && $request['image'] instanceof UploadedFile) {
             deleteImage($this->imagePath, $brand->image);
-            $brand->image = handleImageUpload($request['image'], $this->imagePath, 124, 124);
+            $brand->image = handleImageUpload($request['image'], $this->imagePath);
         }
 
         $brand->save();
@@ -46,7 +47,7 @@ class BrandService
 
     public function deleteBrand(Brand $brand)
     {
-        if ($brand->image) {
+        if (!empty($brand->image)) {
             deleteImage($this->imagePath, $brand->image);
         }
 

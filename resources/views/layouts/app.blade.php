@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com/">
     <link
         href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
@@ -269,7 +269,7 @@
   
         <div class="logo">
           <a href="{{ route('home.index') }}">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="Uomo" class="logo__image d-block" />
+            <img src="{{ asset('assets/images/logo.png') }}" alt="TechNestLogo" class="logo__image d-block" />
           </a>
         </div>
   
@@ -386,7 +386,7 @@
         <div class="header-desk header-desk_type_1">
           <div class="logo">
             <a href="{{ route('home.index') }}">
-              <img src="{{ asset('assets/images/logo.png') }}" alt="Uomo" class="logo__image d-block" />
+              <img src="{{ asset('assets/images/logo.png') }}" alt="TechNestLogo" class="logo__image d-block" />
             </a>
           </div>
   
@@ -505,12 +505,12 @@
           <div class="footer-column footer-store-info col-12 mb-4 mb-lg-0">
             <div class="logo">
               <a href="{{ route('home.index') }}">
-                <img src="{{ asset('assets/images/logo.png') }}" alt="SurfsideMedia" class="logo__image d-block" />
+                <img src="{{ asset('assets/images/logo.png') }}" alt="TechNestLogo" class="logo__image d-block" />
               </a>
             </div>
-            <p class="footer-address">123 Beach Avenue, Surfside City, CA 00000</p>
-            <p class="m-0"><strong class="fw-medium">contact@surfsidemedia.in</strong></p>
-            <p><strong class="fw-medium">+1 000-000-0000</strong></p>
+            <p class="footer-address">123 Long Avenue, TechNest City, 2000</p>
+            <p class="m-0"><strong class="fw-medium">contact@technect.in</strong></p>
+            <p><strong class="fw-medium">+27 00-000-0000</strong></p>
   
             <ul class="social-links list-unstyled d-flex flex-wrap mb-0">
               <li>
@@ -607,7 +607,7 @@
   
       <div class="footer-bottom">
         <div class="container d-md-flex align-items-center">
-          <span class="footer-copyright me-auto">©2025 Software N Things</span>
+          <span class="footer-copyright me-auto">©2025 TechNest</span>
           <div class="footer-settings d-md-flex align-items-center">
             <a href="privacy-policy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms-conditions.html">Terms &amp;
               Conditions</a>
