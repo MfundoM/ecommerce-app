@@ -128,7 +128,7 @@
                     <fieldset>
                         <div class="body-title">Upload images <span class="tf-color-1">*</span></div>
                         <div class="upload-image flex-grow">
-                            @if ($brand->image)
+                            @if ($product->image)
                                 <div class="item" id="imgpreview">
                                     <img src="{{ asset('uploads/products/thumbnails/' . $product->image) }}" class="effect8" alt="">
                                 </div>

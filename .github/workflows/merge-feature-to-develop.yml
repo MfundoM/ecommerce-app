@@ -1,0 +1,28 @@
+name: Auto Merge Feature to Develop
+
+on:
+  push:
+    branches:
+      - 'feature/*'
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+        
+      - name: Merge feature branch into develop
+        run: |
+          git fetch origin
+          git checkout develop
+          git merge origin/$GITHUB_REF_NAME
+          git push origin develop
+        env:
+          GITHUB_REF_NAME: ${{ github.ref_name }}
