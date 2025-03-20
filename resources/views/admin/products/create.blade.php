@@ -104,8 +104,8 @@
                     </div>
 
                     <fieldset class="shortdescription">
-                        <div class="body-title mb-10">Short Description <span class="tf-color-1">*</span></div>
-                        <textarea class="mb-10 ht-150" name="short_description" placeholder="Short Description" tabindex="0" aria-required="true" required="">{{ old('short_description') }}</textarea>
+                        <div class="body-title mb-10">Short Description</div>
+                        <textarea class="mb-10 ht-150" name="short_description" placeholder="Short Description" tabindex="0">{{ old('short_description') }}</textarea>
                         @error('short_description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -115,8 +115,28 @@
 
                     <fieldset class="description">
                         <div class="body-title mb-10">Description <span class="tf-color-1">*</span></div>
-                        <textarea class="mb-10" name="description" placeholder="Description" tabindex="0" aria-required="true" required="">{{ old('description') }}</textarea>
+                        <textarea class="mb-10 description" name="description" placeholder="Description" tabindex="0" aria-required="true" required="">{{ old('description') }}</textarea>
                         @error('description')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </fieldset>
+
+                    <fieldset class="name">
+                        <div class="body-title mb-10">Product tags <span class="tf-color-1">*</span></div>
+                        <input class="mb-10" type="text" placeholder="Enter product tags separated by commas" name="tags" tabindex="0" value="{{ old('tags') }}" aria-required="true" required="">
+                        @error('tags')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </fieldset>
+
+                    <fieldset class="name">
+                        <div class="body-title mb-10">Product colors <span class="tf-color-1">*</span></div>
+                        <input class="mb-10" type="text" placeholder="Enter product colors separated by commas" name="colors" tabindex="0" value="{{ old('colors') }}" aria-required="true" required="">
+                        @error('colors')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -125,10 +145,10 @@
                 </div>
                 <div class="wg-box">
                     <fieldset>
-                        <div class="body-title">Upload images <span class="tf-color-1">*</span></div>
+                        <div class="body-title">Upload images</div>
                         <div class="upload-image flex-grow">
                             <div class="item" id="imgpreview" style="display:none">
-                                <img src="upload-1.html" class="effect8" alt="">
+                                <img src="u/pload-1.html" class="effect8" alt="">
                             </div>
                             <div id="upload-file" class="item up-load">
                                 <label class="uploadfile" for="myFile">
@@ -169,7 +189,7 @@
 
                     <div class="cols gap22">
                         <fieldset class="name">
-                            <div class="body-title mb-10">Regular Price <span class="tf-color-1">*</span></div>
+                            <div class="body-title mb-10">Price <span class="tf-color-1">*</span></div>
                             <input class="mb-10" type="text" placeholder="Enter regular price" name="regular_price" tabindex="0" value="{{ old('regular_price') }}" aria-required="true" required="">
                             @error('regular_price')
                                 <span class="invalid-feedback" role="alert">
@@ -178,9 +198,30 @@
                             @enderror
                         </fieldset>
                         <fieldset class="name">
-                            <div class="body-title mb-10">Sale Price <span class="tf-color-1">*</span></div>
-                            <input class="mb-10" type="text" placeholder="Enter sale price" name="sale_price" tabindex="0" value="{{ old('sale_price') }}" aria-required="true" required="">
+                            <div class="body-title mb-10">Sale Price</div>
+                            <input class="mb-10" type="text" placeholder="Enter sale price" name="sale_price" tabindex="0" value="{{ old('sale_price') }}">
                             @error('sale_price')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </fieldset>
+                    </div>
+
+                    <div class="cols gap22">
+                        <fieldset class="name">
+                            <div class="body-title mb-10">Sizes <span class="tf-color-1">*</span></div>
+                            <div class="select mb-10">
+                            <select class="" name="sizes[]" multiple>
+                                @foreach ($sizes as $size)
+                                    <option value="{{ $size->id }}" 
+                                        {{ in_array($size->id, old('sizes', $selectedSizeIds ?? [])) ? 'selected' : '' }}>
+                                        {{ $size->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            </div>
+                            @error('sizes')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

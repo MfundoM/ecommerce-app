@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Product;
 use App\Services\ProductService;
 
@@ -34,10 +32,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::orderBy('name')->get();
-        $brands = Brand::orderBy('name')->get();
+        $createProductData = $this->productService->getCreateProductData();
 
-        return view('admin.products.create', compact('categories', 'brands'));
+        return view('admin.products.create', $createProductData);
     }
 
     /**
@@ -65,10 +62,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories = Category::orderBy('name')->get();
-        $brands = Brand::orderBy('name')->get();
+        $editProductData = $this->productService->getEditProductData($product);
 
-        return view('admin.products.edit', compact('product', 'categories', 'brands'));
+        return view('admin.products.edit', $editProductData);
     }
 
     /**

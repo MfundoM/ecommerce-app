@@ -329,7 +329,7 @@
                                     @if (!empty($product->images))
                                         @foreach (json_decode($product->images, true) ?? [] as $image)
                                             <div class="swiper-slide">
-                                                <a href="details.html">
+                                                <a href="{{ route('shop.product-details', $product->slug) }}">
                                                     <img loading="lazy" src="{{ asset('uploads/products/' . $image) }}" width="330" height="400" alt="{{ $product->name }}" class="pc__img">
                                                 </a>
                                             </div>
@@ -352,7 +352,7 @@
         
                             <div class="pc__info position-relative">
                                 <p class="pc__category">{{ $product->category->name }}</p>
-                                <h6 class="pc__title"><a href="details.html">{{ $product->name }}</a></h6>
+                                <h6 class="pc__title"><a href="{{ route('shop.product-details', $product->slug) }}">{{ $product->brand->name . ' ' . $product->name }}</a></h6>
                                 <div class="product-card__price d-flex">
                                     <span class="money price">
                                         @if (!empty($product->sale_price) && $product->sale_price != 0)

@@ -18,4 +18,19 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    public function colors()
+    {
+        return $this->belongsToMany(Color::class, 'product_color');
+    }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class, 'product_size');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'product_tag');
+    }
 }

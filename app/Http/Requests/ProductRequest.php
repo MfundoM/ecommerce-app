@@ -22,14 +22,13 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         $productId = request()->route('product')?->id ?? null;
-        $imageRule = $productId ? 'nullable' : 'required';
 
         return [
             'name' => ['required', 'min:2'],
             'slug' => ['required', "unique:products,slug,$productId"],
             'category_id' => ['required', 'exists:categories,id'],
             'brand_id' => ['required', 'exists:brands,id'],
-            'short_description' => ['required', 'string'],
+            'short_description' => ['nullable', 'string'],
             'description' => ['required', 'string'],
             'regular_price' => ['required', 'numeric', 'min:0'],
             'sale_price' => ['nullable', 'numeric', 'min:0', 'lte:regular_price'],
@@ -37,9 +36,12 @@ class ProductRequest extends FormRequest
             'stock_status' => ['required', 'in:in_stock,out_of_stock'],
             'featured' => ['required', 'boolean'],
             'quantity' => ['required', 'integer', 'min:0'],
-            'image' => [$imageRule, 'mimes:png,jpg,jpeg', 'max:2048'],
+            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:2048'],
             'images' => ['nullable', 'array'],
             'images.*' => ['mimes:png,jpg,jpeg', 'max:2048'],
+            'colors' => ['string'],
+            'sizes' => ['array'],
+            'tags' => ['string'],
         ];
     }
 
@@ -58,7 +60,6 @@ class ProductRequest extends FormRequest
             'brand_id.required' => 'Please select a brand.',
             'brand_id.exists' => 'The selected brand does not exist.',
 
-            'short_description.required' => 'The short description is required.',
             'short_description.string' => 'The short description must be a valid string.',
 
             'description.required' => 'The product description is required.',
@@ -86,7 +87,6 @@ class ProductRequest extends FormRequest
             'quantity.integer' => 'The quantity must be an integer.',
             'quantity.min' => 'The quantity must be at least 0.',
 
-            'image.required' => 'The main product image is required.',
             'image.mimes' => 'The main product image must be a file of type: png, jpg, jpeg.',
             'image.max' => 'The main product image size must not exceed 2MB.',
 
