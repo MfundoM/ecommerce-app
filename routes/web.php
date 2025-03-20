@@ -16,6 +16,7 @@ Auth::routes();
 // SHOP ROUTES
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/shop/{slug}', [ShopController::class, 'productDetails'])->name('shop.product-details');
 
 // ACCOUNT ROUTES
 Route::middleware(['auth'])->group(function () {

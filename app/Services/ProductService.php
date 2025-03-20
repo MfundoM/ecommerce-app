@@ -2,7 +2,12 @@
 
 namespace App\Services;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
+use App\Models\Size;
+use App\Models\Tag;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -15,6 +20,16 @@ class ProductService
     public function getPaginatedProducts(int $perPage = 10)
     {
         return Product::orderBy('id', 'DESC')->paginate($perPage);
+    }
+
+    public function getCreateProductData()
+    {
+        $categories = Category::orderBy('name')->get();
+        $brands = Brand::orderBy('name')->get();
+        $colors = Color::all();
+        $sizes = Size::all();
+
+        return compact('categories', 'brands', 'colors', 'sizes');
     }
 
     public function createProduct(array $request)
@@ -45,9 +60,36 @@ class ProductService
                 }
             }
         }
-
         $product->images = json_encode($galleryImages);
         $product->save();
+
+        if (isset($request['colors']) && !empty($request['colors'])) {
+            $colorNames = explode(',', $request['colors']);
+            $colorIds = [];
+
+            foreach ($colorNames as $colorName) {
+                $color = Color::firstOrCreate(['name' => trim($colorName)]);
+                $colorIds[] = $color->id;
+            }
+
+            $product->colors()->sync($colorIds);
+        }
+
+        if (isset($request['sizes']) && is_array($request['sizes'])) {
+            $product->sizes()->attach($request['sizes']);
+        }
+
+        if (isset($request['tags'])  && !empty($request['tags'])) {
+            $tagNames = explode(',', $request['tags']);
+            $tagIds = [];
+
+            foreach ($tagNames as $tagName) {
+                $tag = Tag::firstOrCreate(['name' => trim($tagName)]);
+                $tagIds[] = $tag->id;
+            }
+
+            $product->tags()->sync($tagIds);
+        }
 
         return $product;
     }
@@ -55,6 +97,16 @@ class ProductService
     public function showProduct(Product $product)
     {
         // TODO implement showProduct method
+    }
+
+    public function getEditProductData(Product $product)
+    {
+        $categories = Category::orderBy('name')->get();
+        $brands = Brand::orderBy('name')->get();
+        $colors = Color::all();
+        $sizes = Size::all();
+
+        return compact('product', 'categories', 'brands', 'colors', 'sizes');
     }
 
     public function updateProduct(array $request, Product $product)
@@ -94,6 +146,34 @@ class ProductService
             $product->images = json_encode($galleryImages);
         }
         $product->save();
+
+        if (isset($request['colors']) && !empty($request['colors'])) {
+            $colorNames = explode(',', $request['colors']);
+            $colorIds = [];
+
+            foreach ($colorNames as $colorName) {
+                $color = Color::firstOrCreate(['name' => trim($colorName)]);
+                $colorIds[] = $color->id;
+            }
+
+            $product->colors()->sync($colorIds);
+        }
+
+        if (isset($request['sizes']) && is_array($request['sizes'])) {
+            $product->sizes()->sync($request['sizes']);
+        }
+
+        if (isset($request['tags'])  && !empty($request['tags'])) {
+            $tagNames = explode(',', $request['tags']);
+            $tagIds = [];
+
+            foreach ($tagNames as $tagName) {
+                $tag = Tag::firstOrCreate(['name' => trim($tagName)]);
+                $tagIds[] = $tag->id;
+            }
+
+            $product->tags()->sync($tagIds);
+        }
 
         return $product;
     }

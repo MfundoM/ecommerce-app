@@ -22,12 +22,11 @@ class BrandRequest extends FormRequest
     public function rules(): array
     {
         $brandId = request()->route('brand')?->id ?? null;
-        $imageRule = $brandId ? 'nullable' : 'required';
 
         return [
             'name' => ['required', 'min:2'],
             'slug' => ['required', 'min:2', "unique:brands,slug,$brandId"],
-            'image' => [$imageRule, 'mimes:png,jpg,jpeg', 'max:2048'],
+            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:2048'],
         ];
     }
 
@@ -41,7 +40,6 @@ class BrandRequest extends FormRequest
             'slug.min' => 'The brand slug must be at least 2 characters.',
             'slug.unique' => 'The brand slug must be unique.',
 
-            'image.required' => 'The brand image is required.',
             'image.mimes' => 'The brand image must be a file of type: png, jpg, jpeg.',
             'image.max' => 'The brand image size must not exceed 2MB.',
         ];
