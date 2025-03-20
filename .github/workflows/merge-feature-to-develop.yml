@@ -18,11 +18,9 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
         
-      - name: Merge feature branch into develop
+      - name: Fetch and Merge feature branch into develop
         run: |
           git fetch origin
           git checkout develop
-          git merge origin/$GITHUB_REF_NAME
+          git merge origin/${{ github.head_ref }} --no-ff --no-edit
           git push origin develop
-        env:
-          GITHUB_REF_NAME: ${{ github.ref_name }}
